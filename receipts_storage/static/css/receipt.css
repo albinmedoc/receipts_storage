@@ -1,0 +1,63 @@
+main{
+    margin-top: 0;
+}
+
+#header{
+    height: 180px;
+}
+
+#actions{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+#actions > a{
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+}
+
+#receipt_header{
+    text-align: center;
+    color: #fff;
+}
+
+#receipt_header > h3{
+    font-size: 40px;
+    margin: 10px;
+}
+
+#receipt_header > p{
+    font-size: 15px;
+    margin: 5px;
+}
+
+#receipt_sum{
+    text-align: center;
+}
+
+
+.product{
+    width: calc(100% - 30px);
+    max-width: 500px;
+    padding: 15px;
+    color: #fff;
+    margin: 10px auto;
+}
+
+.product > h4{
+    font-size: 20px;
+    text-align: center;
+    margin: 10px;
+}
+
+.product > div{
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+}

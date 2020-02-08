@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block css %}
+{{ super() }}
+<link
+    href="{{ url_for('static', filename='css/home.css') }}"
+    rel="stylesheet"
+/>
+{% endblock css %}
+{% block javascript %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/search_input.js') }}"></script>
+{% endblock javascript %}
+{% block main %}
+<section id="recent_receipts">
+    <h3>Senaste kvittona</h3>
+    <div id="receipts_container">
+        {% for receipt in recent_receipts %}
+        <a class="receipt" href="{{ url_for('receipt.receipt', receipt_id=receipt.id) }}" style="background-color: #{{ receipt.color.value }};">
+            <h4>{{ receipt.store.name }}</h4>
+            <ul class="receipt_products">
+                {% for product in receipt.products %}
+                <li><p>{{ product.name }}</p></li>
+                {% endfor %}
+            </ul>
+            <p class="receipt_sum">{{ "{:,.2f}".format(receipt.sum).replace(",", " ") }}kr</p>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endblock main %}

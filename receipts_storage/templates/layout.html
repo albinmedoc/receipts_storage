@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="sv">
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta charset="utf-8" />
+        <title>{% block title %}Kvitton{% endblock title %}</title>
+        {% block css %}
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/main.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/responsive_form.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/hamburger_icon.css') }}"
+        />
+        {% endblock css %} {% block fonts %}
+        <link
+            href="https://fonts.googleapis.com/css?family=Righteous&display=swap"
+            rel="stylesheet"
+        />
+        {% endblock fonts %}
+    </head>
+    <body>
+        <div id="loader_container">
+            <div id="loader"></div>
+        </div>
+        {% block header %}
+        <header>
+            <a id="logo" href="{{ url_for('home.home') }}">
+                <img
+                    src="{{ url_for('static', filename='img/logo.svg') }}"
+                    alt="Kvitton logo"
+                    title="Startsida"
+                />
+            </a>
+            <button
+                id="nav_btn"
+                class="hamburger hamburger--slider"
+                type="button"
+            >
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </button>
+        </header>
+        <nav id="navigation" role="navigation">
+            <ul>
+                <li><a href="{{ url_for('home.home') }}">Startsida</a></li>
+                <li><a href="{{ url_for('receipt.new_receipt') }}">Lägg till kvitto</a></li>
+                <li><a href="{{ url_for('home.statistics') }}">Statistik</a></li>
+                <li><a>Inställningar</a></li>
+            </ul>
+        </nav>
+        {% endblock header %}
+        <main id="main">
+            {% block main %} {% endblock main %}
+        </main>
+        {% block javascript %}
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+        {% endblock javascript %}
+    </body>
+</html>

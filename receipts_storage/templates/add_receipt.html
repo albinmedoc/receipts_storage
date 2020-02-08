@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+{% block title %}
+Lägg till kvitto
+{% endblock title %}
+{% block css %}
+{{ super() }}
+<link href="{{ url_for('static', filename='css/tag_input.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/add_receipt.css') }}" rel="stylesheet">
+{% endblock css %}
+{% block javascript %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/tag_input.js') }}"></script>
+<script src="{{ url_for('static', filename='js/add_receipt.js') }}"></script>
+{% endblock javascript %}
+{% block main %}
+<form class="responsive_form" method="POST" enctype="multipart/form-data">
+    {{ form.csrf_token() }}
+    <div class="form_row">
+        <div class="input_container">
+            {{ form.store(placeholder=" ", class="error" if form.store.errors) }}
+            {{ form.store.label() }}
+            <div class="errors">
+                {% for error in form.store.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="form_row">
+        <div class="input_container">
+            {{ form.receipt_number(placeholder=" ", class="error" if form.receipt_number.errors) }}
+            {{ form.receipt_number.label() }}
+            <div class="errors">
+                {% for error in form.receipt_number.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="form_row">
+        <div class="input_container">
+            {{ form.date(placeholder=" ", class="error" if form.date.errors) }}
+            {{ form.date.label() }}
+            <div class="errors">
+                {% for error in form.date.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="form_row">
+        <div class="input_container">
+            <div class="tag_container">
+                <input class="tag_input" type="text">
+                {{ form.tags.label() }}
+                {{ form.tags(placeholder=" ", class="error" if form.tags.errors) }}
+            </div>
+            <div class="errors">
+                {% for error in form.tags.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="form_row">
+        <div class="input_container">
+            {{ form.images(placeholder=" ", class="error" if form.images.errors) }}
+            {{ form.images.label() }}
+            <div class="errors">
+                {% for error in form.images.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div id="products_container">
+        {% for product in form.products %}
+            <fieldset class="product_container">
+                <legend>Produkt {{ loop.index }}</legend>
+                <div class="form_row">
+                    <div class="input_container">
+                        {{ product.form.name(placeholder=" ", class="error" if product.form.name.errors) }}
+                        {{ product.form.name.label() }}
+                        <div class="errors">
+                            {% for error in product.form.name.errors %}
+                                <p class="error">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="input_container">
+                        {{ product.form.price(placeholder=" ", class="error" if product.form.price.errors) }}
+                        {{ product.form.price.label() }}
+                        <div class="errors">
+                            {% for error in product.form.price.errors %}
+                                <p class="error">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="input_container">
+                        <div class="tag_container">
+                            <input class="tag_input" type="text">
+                            {{ product.form.tags.label() }}
+                            {{ product.form.tags(placeholder=" ", class="error" if product.form.tags.errors) }}
+                        </div>
+                        <div class="errors">
+                            {% for error in product.form.tags.errors %}
+                                <p class="error">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="form_row">
+                    <div class="input_container">
+                        {{ product.form.images(placeholder=" ", class="error" if product.form.images.errors) }}
+                        {{ product.form.images.label() }}
+                        <div class="errors">
+                            {% for error in product.form.images.errors %}
+                                <p class="error">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        {% endfor %}
+    </div>
+    <div class="form_row">
+        <div class="input_container">
+            <a class="info" onclick="addProduct()">Lägg till produkt</a>
+        </div>
+    </div>
+</div>
+    <div class="form_row">
+        <div class="input_container">
+            {{ form.submit() }}
+        </div>
+    </div>
+</form>
+{% endblock main %}

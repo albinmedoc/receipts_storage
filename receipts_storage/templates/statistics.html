@@ -1,0 +1,29 @@
+{% extends "layout.html" %} {% block css %} {{ super() }}
+<link
+    href="{{ url_for('static', filename='css/statistics.css') }}"
+    rel="stylesheet"
+/>
+{% endblock css %} {% block main %}
+<section id="container_statistics">
+    <div>
+        <h2>Statistik</h2>
+        <hr>
+    </div>
+    <div>
+        <p>{{ count_receipts }}st</p>
+        <p>kvitton.</p>
+    </div>
+    <div>
+        <p>{{ receipts_sum }} kr</p>
+        <p>är kvittona värda.</p>
+    </div>
+    <div>
+        <p>{{ count_stores }}st</p>
+        <p>olika butiker.</p>
+    </div>
+    <div>
+        <p>{{ count_products }}st</p>
+        <p>produkter.</p>
+    </div>
+</section>
+{% endblock main %}

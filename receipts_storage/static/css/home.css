@@ -1,0 +1,36 @@
+main{
+    display: flex;
+    justify-content: center;
+}
+
+#recent_receipts{
+    width: 500px;
+}
+
+.receipt{
+    margin: 20px 0;
+    display: block;
+    padding: 15px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.receipt > h4{
+    margin: 10px;
+    font-size: 30px;
+    text-align: center;
+}
+
+.receipt > .receipt_products{
+    padding-left: 10px;
+}
+
+.receipt p{
+    font-size: 20px;
+}
+
+.receipt .receipt_sum{
+    text-align: center;
+    font-size: 30px;
+    margin: 0;
+}

@@ -1,0 +1,140 @@
+:root {
+    /* Header */
+    --header-background-color: #03A9F4;
+    --header-height: 100px;
+
+    /* Navigation */
+    --nav-width: 500px;
+
+    /* Responsive form */
+    --responsive-form-info-color: #e86ed0;
+
+    --main-font: 'Righteous', cursive;
+}
+*{
+    font-family: var(--main-font);
+}
+body{
+    margin: 0;
+    background-color: #f9f7f7;
+}
+
+/* Header */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;;
+    width: 100%;
+    height: var(--header-height);
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--header-background-color);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.397);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.397);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.397);
+    z-index: 2;
+}
+
+#logo {
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    position: relative;
+}
+
+#logo > img{
+    height: calc(100% - 50px);
+    display: none;
+}
+
+@media (min-width:325px) {
+    #logo > img{
+        display: block;
+    }
+}
+
+/* -Header */
+
+/* Navigation */
+
+#navigation{
+    z-index: 1;
+    position: fixed;
+    top: var(--header-height);
+    min-height: calc(100vh - var(--header-height));
+    right: calc(var(--nav-width) * -1);
+    width: var(--nav-width);
+    transition: right .3s ease-in-out;
+    background-color: var(--header-background-color);
+    -webkit-box-shadow: -1px 0 5px rgba(0, 0, 0, 0.397);
+    -moz-box-shadow: -1px 0 5px rgba(0, 0, 0, 0.397);
+    box-shadow: -1px 0 5px rgba(0, 0, 0, 0.397);
+}
+
+#navigation.is-active{
+    right: 0;
+}
+
+#navigation.is-active + main{
+    width: calc(100% - var(--nav-width));
+}
+
+#navigation > ul{
+    margin: 0;
+    padding: 0;
+}
+
+#navigation > ul > li{
+    height: calc((100vh - var(--header-height))/4);
+    margin: 0;
+    list-style: none;
+}
+
+#navigation > ul > li:nth-child(1){
+    background-color: #9C27B0;
+}
+
+#navigation > ul > li:nth-child(2){
+    background-color: #009688;
+}
+
+#navigation > ul > li:nth-child(3){
+    background-color: #8BC34A;
+}
+
+#navigation > ul > li:nth-child(4){
+    background-color: #FFC107;
+}
+#navigation > ul > li > a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: #fff;
+    font-size: 30px;
+}
+
+/* -Navigation */
+
+main{
+    width: 100vw;
+    margin-top: var(--header-height);
+    transition: width .3s ease-in-out;
+    position: relative;
+}
+
+@media (max-width:500px) {
+    #navigation.is-active{
+        width: 100%;
+    }
+
+    #navigation > #links > ul{
+        padding: 0;
+    }
+
+    #navigation > #links > ul > li{
+        text-align: center;
+    }
+}
