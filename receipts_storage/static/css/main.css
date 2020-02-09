@@ -7,7 +7,10 @@
     --nav-width: 500px;
 
     /* Responsive form */
-    --responsive-form-info-color: #e86ed0;
+    --responsive-form-info-color: black;
+    --responsive-form-button-background-color: #e6f8f9;
+    --responsive-form-button-border-color: black;
+    --responsive-form-button-color: black;
 
     --main-font: 'Righteous', cursive;
 }
