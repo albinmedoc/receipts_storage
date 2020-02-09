@@ -15,8 +15,8 @@ class TagInput{
 
         //Load old tags
         try{
-            JSON.parse(this.output.value).forEach(function(tag){
-                if(tags != ""){
+            this.output.value.split(",").forEach(function(tag){
+                if(tag != ""){
                     tag_input.tags.push(tag);
                     tag_input.addTags();
                 }
