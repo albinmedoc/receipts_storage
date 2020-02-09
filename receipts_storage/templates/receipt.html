@@ -12,7 +12,7 @@
 <div id="header" style="background-color: #{{ receipt.color.value }};">
     <div id="actions">
         <a href="{{ url_for('home.home') }}"><i class="material-icons">arrow_back</i> Tillbaka</a>
-        <a href="{{ url_for('receipt.edit_receipt', receipt_id=receipt.id) }}">Ändra <i class="material-icons">edit</i></a>
+        <a href="{{ url_for('receipt.edit', receipt_id=receipt.id) }}">Ändra <i class="material-icons">edit</i></a>
     </div>
     <section id="receipt_header">
         <h3>{{ receipt.store.name  }}</h3>
