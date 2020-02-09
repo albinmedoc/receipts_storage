@@ -6,6 +6,7 @@ from receipts_storage.app import db
 
 class Image(db.Model):
     __tablename__ = "image"
+    
     id = db.Column(db.Integer(), primary_key=True)
     filename = db.Column(db.String())
 

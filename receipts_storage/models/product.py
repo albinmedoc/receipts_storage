@@ -14,6 +14,8 @@ product_images = db.Table("product_images",
 
 class Product(db.Model):
     __tablename__ = "product"
+    __searchable__ = ["name"]
+
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String())
     price = db.Column(db.Float())

@@ -17,6 +17,8 @@ receipt_images = db.Table("receipt_images",
 
 class Receipt(db.Model):
     __tablename__ = "receipt"
+    __searchable__ = ["receipt_number"]
+
     id = db.Column(db.Integer(), primary_key=True)
     receipt_number = db.Column(db.String())
     date = db.Column(db.Date())
