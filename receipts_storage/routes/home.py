@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from receipts_storage.models import Product, Receipt, Store
+from receipts_storage.models import Product, Receipt, Store, Tag
 
 bp_home = Blueprint("home", __name__)
 
@@ -14,10 +14,11 @@ def statistics():
     count_receipts = Receipt.query.count()
     count_products = Product.query.count()
     count_stores = Store.query.count()
+    count_tags = Tag.query.count()
 
     receipts = Receipt.query.all()
     receipts_sum = 0
     for receipt in receipts:
         receipts_sum = receipts_sum + receipt.sum
     
-    return render_template("statistics.html", count_receipts=count_receipts, count_products=count_products, count_stores=count_stores, receipts_sum=receipts_sum)
+    return render_template("statistics.html", count_receipts=count_receipts, count_products=count_products, count_stores=count_stores, receipts_sum=receipts_sum, count_tags=count_tags)
