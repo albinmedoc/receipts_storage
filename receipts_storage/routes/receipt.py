@@ -7,7 +7,7 @@ from receipts_storage.app import db
 bp_receipt = Blueprint("receipt", __name__)
 
 @bp_receipt.route("/receipt/new", methods=["GET", "POST"])
-def new_receipt():
+def create():
     form = ReceiptForm()
     if(form.validate_on_submit()):
         # Create Store if not exists
@@ -56,12 +56,12 @@ def new_receipt():
         # Commit receipt
         db.session.add(receipt)
         db.session.commit()
-        return redirect(url_for("receipt.receipt", receipt_id=receipt.id))
+        return redirect(url_for("receipt.show", receipt_id=receipt.id))
     return render_template("add_receipt.html", form=form)
 
 
 @bp_receipt.route("/receipt/<int:receipt_id>/edit", methods=["GET", "POST"])
-def edit_receipt(receipt_id):
+def edit(receipt_id):
     receipt = Receipt.query.filter_by(id=receipt_id).first()
     if(not receipt):
         abort(404)
@@ -186,19 +186,23 @@ def edit_receipt(receipt_id):
 
         db.session.add(receipt)
         db.session.commit()
-        return redirect(url_for("receipt.receipt", receipt_id=receipt.id))
+        return redirect(url_for("receipt.show", receipt_id=receipt.id))
     print(form.errors)
     return "not valid"
 
-            
 
-
-
-
+@bp_receipt.route("/receipt/<int:receipt_id>/delete")
+def delete(receipt_id):
+    receipt = Receipt.query.filter_by(id=receipt_id).first()
+    if(not receipt):
+        abort(404)
+    db.session.delete(receipt)
+    db.session.commit()
+    return redirect(url_for("home.home"))
     
 
 @bp_receipt.route("/receipt/<int:receipt_id>")
-def receipt(receipt_id):
+def show(receipt_id):
     receipt = Receipt.query.filter_by(id=receipt_id).first()
     if(not receipt):
         abort(404)
