@@ -29,7 +29,7 @@ class Receipt(db.Model):
     color = db.relationship("Color")
     tags = db.relationship("Tag", secondary=receipt_tags, lazy="subquery")
     images = db.relationship("Image", secondary=receipt_images, lazy="subquery")
-    products = db.relationship("Product", back_populates="receipt")
+    products = db.relationship("Product", back_populates="receipt", cascade="all, delete, delete-orphan")
 
     def __init__(self, *args, **kwargs):
         self.color = Color.query.order_by(func.random()).first()
