@@ -60,7 +60,7 @@ def new_receipt():
     return render_template("add_receipt.html", form=form)
 
 
-@bp_receipt.route("/receipt/<int:receipt_id>/edit")
+@bp_receipt.route("/receipt/<int:receipt_id>/edit", methods=["GET", "POST"])
 def edit_receipt(receipt_id):
     receipt = Receipt.query.filter_by(id=receipt_id).first()
     if(not receipt):
@@ -81,7 +81,7 @@ def edit_receipt(receipt_id):
             product_form.tags = ','.join([tag.name for tag in product.tags])
 
             form.products.append_entry(product_form)
-        return render_template("add_receipt.html", form=form)
+        return render_template("edit_receipt.html", receipt=receipt, form=form)
 
     # Post-request and form is validated
     elif(form.validate_on_submit()):
@@ -91,7 +91,7 @@ def edit_receipt(receipt_id):
             store = Store.query.filter_by(name=form.store.data).first()
             if(not store):
                 store = Store(name=form.store.data)
-            if(len(receipt.store) <= 1):
+            if(len(receipt.store.receipts) <= 1):
                 db.session.delete(receipt.store)
             receipt.store = store
         
@@ -108,19 +108,89 @@ def edit_receipt(receipt_id):
         current_tags = json.loads(form.tags.data)
         remove_tags = [tag for tag in old_tags if tag not in current_tags]
         add_tags = [tag for tag in current_tags if tag not in old_tags]
+
+        # - Remove tags
         for tag_name in remove_tags:
             tag = Tag.query.filter_by(name=tag_name).first()
             if(tag):
                 receipt.tags.remove(tag)
+
+        # - Add tags
         for tag_name in add_tags:
             tag = Tag.query.filter_by(name=tag_name).first()
             if(not tag):
                 tag = Tag(name=tag_name)
             receipt.tags.append(tag)
+
         
         # Updating products
-        for entry in form.products.entries:
-            pass
+        old_products = [product.name for product in receipt.products]
+        current_products = [product.data["name"] for product in form.products.entries]
+        remove_products = [product for product in old_products if product not in current_products]
+
+        # - Remove products
+        for product_name in remove_products:
+            product = Product.query.filter_by(name=product_name, receipt=receipt).first()
+            if(product):
+                receipt.products.remove(product)
+
+        # - Add and update products
+        for product_entry in form.products.entries:
+            product_name = product_entry.data["name"]
+
+            # Update
+            if(product_name in old_products):
+                product = Product.query.filter_by(name=product_name, receipt=receipt).first()
+                if(product):
+                    product.price = product_entry.data["price"]
+
+                    # Updating product tags
+                    old_tags = [tag.name for tag in product.tags]
+                    current_tags = json.loads(product_entry.data["tags"])
+                    remove_tags = [tag for tag in old_tags if tag not in current_tags]
+                    add_tags = [tag for tag in current_tags if tag not in old_tags]
+
+                    # - Remove tags
+                    for tag_name in remove_tags:
+                        tag = Tag.query.filter_by(name=tag_name).first()
+                        if(tag):
+                            product.tags.remove(tag)
+
+                    # - Add tags
+                    for tag_name in add_tags:
+                        tag = Tag.query.filter_by(name=tag_name).first()
+                        if(not tag):
+                            tag = Tag(name=tag_name)
+                        product.tags.append(tag)
+
+            # Add
+            else:
+                product = Product(name=product_entry.data["name"], price=product_entry.data["price"], returned=False)
+            
+                # Add product tags
+                if(product_entry.data["tags"] != ""):
+                    for tag_name in json.loads(product_entry.data["tags"]):
+                        tag = Tag.query.filter_by(name=tag_name).first()
+                        if(not tag):
+                            tag = Tag(name=tag_name)
+                        product.tags.append(tag)
+                    
+                # Save product images
+                for img in product_entry.data["images"]:
+                    if(img.filename):
+                        img = Image(image=img)
+                        product.images.append(img)
+
+                # Add product to the receipt
+                receipt.products.append(product)
+
+        db.session.add(receipt)
+        db.session.commit()
+        return redirect(url_for("receipt.receipt", receipt_id=receipt.id))
+    print(form.errors)
+    return "not valid"
+
+            
 
 
 
