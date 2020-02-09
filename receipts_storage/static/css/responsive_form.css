@@ -112,6 +112,11 @@
     color: var(--responsive-form-info-url-color);
 }
 
+.responsive_form .warning {
+    margin: 0;
+    color: red;
+}
+
 .responsive_form .input_container .error {
     text-align: center;
     color: red;
