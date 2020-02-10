@@ -34,7 +34,7 @@
         </div>
         {% block header %}
         <header>
-            <a id="logo" href="{{ url_for('home.home') }}">
+            <a id="logo" href="{{ url_for('main.home') }}">
                 <img
                     src="{{ url_for('static', filename='img/logo.svg') }}"
                     alt="Kvitton logo"
@@ -53,9 +53,9 @@
         </header>
         <nav id="navigation" role="navigation">
             <ul>
-                <li><a href="{{ url_for('home.home') }}">Startsida</a></li>
+                <li><a href="{{ url_for('main.home') }}">Startsida</a></li>
                 <li><a href="{{ url_for('receipt.create') }}">Lägg till kvitto</a></li>
-                <li><a href="{{ url_for('home.statistics') }}">Statistik</a></li>
+                <li><a href="{{ url_for('main.statistics') }}">Statistik</a></li>
                 <li><a>Inställningar</a></li>
             </ul>
         </nav>

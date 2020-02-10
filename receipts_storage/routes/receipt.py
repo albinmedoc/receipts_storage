@@ -198,7 +198,7 @@ def delete(receipt_id):
         abort(404)
     db.session.delete(receipt)
     db.session.commit()
-    return redirect(url_for("home.home"))
+    return redirect(url_for("main.home"))
     
 
 @bp_receipt.route("/receipt/<int:receipt_id>")
